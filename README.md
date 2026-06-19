@@ -152,6 +152,8 @@ Current demo policy:
   `mergeable` so a second reviewer is required before `atlantis apply`
 - `atlantis.yaml` enables `automerge: true`, so Atlantis can merge a PR after a
   successful apply when GitHub still considers that PR mergeable
+- The current fine-grained GitHub token needs enough write access for both PR
+  comments and merge operations
 
 Automerge expectations:
 
@@ -181,11 +183,12 @@ Working now:
 - Cloudflare Tunnel is reachable at `miso-atlantis.adevsh.com`
 - `make validate` passes
 - Atlantis repo-side and server-side config files are present
-- Atlantis apply succeeds against the demo `null_resource`
+- Atlantis plans and applies successfully against the demo `null_resource`
+- Atlantis auto-merges the PR after a successful apply when the token has
+  sufficient GitHub permissions
 
 Still to finish:
 
-- fuller end-to-end apply verification in PR comments
 - GitHub Actions CI workflow
 - richer README polish such as badges and screenshots
 

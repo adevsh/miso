@@ -6,7 +6,10 @@
 
 repos:
   - id: github.com/adevsh/miso
-    # Public repos should require review and a mergeable PR before apply.
+    # Solo testing uses only `mergeable` because there may be no second reviewer
+    # available to satisfy Atlantis' approval requirement on GitHub.
+    #
+    # Re-enable `approved` for organization or team use so applies require an
+    # independent PR review before infrastructure changes are executed.
     apply_requirements:
-      - approved
       - mergeable

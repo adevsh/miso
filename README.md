@@ -145,6 +145,12 @@ Two Atlantis config layers are used:
 This split matters because `apply_requirements` should stay server-side, so a
 pull request cannot weaken apply protections.
 
+Current demo policy:
+
+- Solo testing currently uses `mergeable` only in `repos.yaml`
+- Team or organization deployments should restore `approved` alongside
+  `mergeable` so a second reviewer is required before `atlantis apply`
+
 ## Demo Infrastructure
 
 The `infra/` module currently uses the `hashicorp/null` provider and a
@@ -177,6 +183,8 @@ Still to finish:
 
 - State is currently local to Atlantis because no remote backend is configured
   yet
+- `repos.yaml` intentionally relaxes apply requirements for solo testing; for a
+  shared repository, restore `approved` in addition to `mergeable`
 - The production container intentionally has no shell because it uses
   `ubi-micro`
 - The `shell` Make target is only for temporary debug images, not the final

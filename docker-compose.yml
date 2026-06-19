@@ -1,0 +1,45 @@
+# docker-compose.yml
+#
+# Local orchestration for miso.
+# Two services: atlantis (IaC engine) and cloudflared (stable public tunnel).
+# Both share the `miso` bridge network so cloudflared can route to Atlantis
+# by service name instead of a fixed container IP.
+
+services:
+  atlantis:
+    # Build from the repo-local Dockerfile once that image is added.
+    build: .
+    command:
+      - server
+      - --repo-config=/home/atlantis/repos.yaml
+      - --allow-commands=plan,apply,unlock
+    env_file: .env
+    environment:
+      ATLANTIS_PORT: "4141"
+      ATLANTIS_REPO_ALLOWLIST: "github.com/adevsh/miso"
+      ATLANTIS_TOFU_PATH: "/usr/local/bin/tofu"
+      ATLANTIS_DEFAULT_TF_VERSION: "v1.9.0"
+    volumes:
+      - atlantis-data:/home/atlantis
+      - ./repos.yaml:/home/atlantis/repos.yaml:ro
+    networks:
+      - miso
+    # Recover automatically after Docker daemon restarts or transient crashes.
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN}
+    networks:
+      - miso
+    depends_on:
+      - atlantis
+    restart: unless-stopped
+
+networks:
+  miso:
+
+volumes:
+  atlantis-data:

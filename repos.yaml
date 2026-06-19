@@ -1,0 +1,15 @@
+# repos.yaml
+#
+# Server-side Atlantis repository policy for miso.
+# Keep approval and mergeability requirements here instead of in repo-side
+# `atlantis.yaml` so PR authors cannot weaken apply protections from a branch.
+
+repos:
+  - id: github.com/adevsh/miso
+    # Solo testing uses only `mergeable` because there may be no second reviewer
+    # available to satisfy Atlantis' approval requirement on GitHub.
+    #
+    # Re-enable `approved` for organization or team use so applies require an
+    # independent PR review before infrastructure changes are executed.
+    apply_requirements:
+      - mergeable

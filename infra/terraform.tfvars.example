@@ -1,0 +1,6 @@
+# infra/terraform.tfvars.example
+#
+# Example variable assignments for local testing.
+# Changing this value is enough to create a visible Atlantis plan diff.
+
+run_id = "example-pr-change"

@@ -1,2 +1,20 @@
+# Secrets
 .env
+
+# OpenTofu/Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+
+# Local tooling
+.DS_Store
+
+# Docker
+*.log
+
 SKILL.md

@@ -1,0 +1,22 @@
+# atlantis.yaml
+#
+# Repository-side Atlantis project configuration for miso.
+# Atlantis reads this file from the repo root, while `dir: infra` tells it
+# where the OpenTofu root module lives inside the repository.
+
+version: 3
+projects:
+  - name: miso-infra
+    dir: infra
+    terraform_distribution: opentofu
+    terraform_version: v1.9.0
+    workflow: default
+    autoplan:
+      when_modified:
+        - "*.tf"
+        - "*.tfvars"
+      enabled: true
+    # Public repos should require review and mergeability before apply.
+    apply_requirements:
+      - approved
+      - mergeable

@@ -150,6 +150,15 @@ Current demo policy:
 - Solo testing currently uses `mergeable` only in `repos.yaml`
 - Team or organization deployments should restore `approved` alongside
   `mergeable` so a second reviewer is required before `atlantis apply`
+- `atlantis.yaml` enables `automerge: true`, so Atlantis can merge a PR after a
+  successful apply when GitHub still considers that PR mergeable
+
+Automerge expectations:
+
+- Atlantis apply and merge are still separate checks internally
+- A successful apply does not override GitHub branch protection
+- If required checks, reviews, or merge settings are not satisfied, Atlantis
+  will apply successfully and leave the PR open
 
 ## Demo Infrastructure
 
@@ -172,6 +181,7 @@ Working now:
 - Cloudflare Tunnel is reachable at `miso-atlantis.adevsh.com`
 - `make validate` passes
 - Atlantis repo-side and server-side config files are present
+- Atlantis apply succeeds against the demo `null_resource`
 
 Still to finish:
 
@@ -185,6 +195,8 @@ Still to finish:
   yet
 - `repos.yaml` intentionally relaxes apply requirements for solo testing; for a
   shared repository, restore `approved` in addition to `mergeable`
+- `automerge: true` is enabled, but actual PR merge still depends on GitHub
+  mergeability and repository protection rules
 - The production container intentionally has no shell because it uses
   `ubi-micro`
 - The `shell` Make target is only for temporary debug images, not the final

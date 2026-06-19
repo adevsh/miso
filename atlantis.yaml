@@ -5,6 +5,7 @@
 # where the OpenTofu root module lives inside the repository.
 
 version: 3
+automerge: true
 projects:
   - name: miso-infra
     dir: infra

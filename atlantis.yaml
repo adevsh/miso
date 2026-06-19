@@ -10,7 +10,6 @@ projects:
     dir: infra
     terraform_distribution: opentofu
     terraform_version: v1.9.0
-    workflow: default
     autoplan:
       when_modified:
         - "*.tf"

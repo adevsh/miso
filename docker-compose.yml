@@ -9,6 +9,10 @@ services:
   atlantis:
     # Build from the repo-local Dockerfile once that image is added.
     build: .
+    command:
+      - server
+      - --repo-config=/home/atlantis/repos.yaml
+      - --allow-commands=plan,apply,unlock
     env_file: .env
     environment:
       ATLANTIS_PORT: "4141"
@@ -17,6 +21,7 @@ services:
       ATLANTIS_DEFAULT_TF_VERSION: "v1.9.0"
     volumes:
       - atlantis-data:/home/atlantis
+      - ./repos.yaml:/home/atlantis/repos.yaml:ro
     networks:
       - miso
     # Recover automatically after Docker daemon restarts or transient crashes.

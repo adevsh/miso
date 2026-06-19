@@ -15,7 +15,3 @@ projects:
         - "*.tf"
         - "*.tfvars"
       enabled: true
-    # Public repos should require review and mergeability before apply.
-    apply_requirements:
-      - approved
-      - mergeable
